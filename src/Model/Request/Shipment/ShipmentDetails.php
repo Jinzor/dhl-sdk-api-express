@@ -10,6 +10,7 @@ use Dhl\Express\Webservice\Soap\Type\Common\Billing\ShippingPaymentType;
 use Dhl\Express\Webservice\Soap\Type\Common\Content;
 use Dhl\Express\Webservice\Soap\Type\Common\DropOffType;
 use Dhl\Express\Webservice\Soap\Type\Common\PaymentInfo;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\RequestEstimatedDeliveryDate;
 
 /**
  * Shipment Details.
@@ -63,6 +64,12 @@ class ShipmentDetails implements ShipmentDetailsInterface
     const SHIPPING_PAYMENT_TYPE_R = ShippingPaymentType::R;
     const SHIPPING_PAYMENT_TYPE_S = ShippingPaymentType::S;
     const SHIPPING_PAYMENT_TYPE_T = ShippingPaymentType::T;
+
+    /**
+     * @see RequestEstimatedDeliveryDate
+     */
+    const ESTIMATED_DELIVERY_TYPE_QDDC = RequestEstimatedDeliveryDate::TYPE_QDDC;
+    const ESTIMATED_DELIVERY_TYPE_QDDF = RequestEstimatedDeliveryDate::TYPE_QDDF;
 
     /**
      * Whether this is a scheduled pickup or not.
@@ -138,6 +145,21 @@ class ShipmentDetails implements ShipmentDetailsInterface
     private $paperlessDocument;
 
     /**
+     * @var bool
+     */
+    private $estimatedDeliveryDateRequested;
+
+    /**
+     * @var
+     */
+    private $exportDeclaration;
+
+    /**
+     * @var string
+     */
+    private $estimatedDeliveryType = self::ESTIMATED_DELIVERY_TYPE_QDDC;
+
+    /**
      * ShipmentDetails constructor.
      *
      * @param bool $unscheduledPickup
@@ -149,6 +171,7 @@ class ShipmentDetails implements ShipmentDetailsInterface
      * @param string $description
      * @param float $customsValue
      * @param string $serviceType
+     * @param bool $estimatedDeliveryDateRequested
      */
     public function __construct(
         $unscheduledPickup,
@@ -159,7 +182,8 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $currencyCode,
         $description,
         $customsValue,
-        $serviceType
+        $serviceType,
+        $estimatedDeliveryDateRequested
     ) {
         $this->unscheduledPickup = $unscheduledPickup;
         $this->termsOfTrade = $termsOfTrade;
@@ -170,6 +194,7 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $this->description = $description;
         $this->customsValue = $customsValue;
         $this->serviceType = $serviceType;
+        $this->estimatedDeliveryDateRequested = $estimatedDeliveryDateRequested;
     }
 
     public function isUnscheduledPickup()
@@ -180,6 +205,11 @@ class ShipmentDetails implements ShipmentDetailsInterface
     public function isRegularPickup()
     {
         return !$this->unscheduledPickup;
+    }
+
+    public function isEstimatedDeliveryDateRequested()
+    {
+        return !!$this->estimatedDeliveryDateRequested;
     }
 
     public function getTermsOfTrade()
@@ -235,5 +265,15 @@ class ShipmentDetails implements ShipmentDetailsInterface
     public function getExportDeclaration()
     {
         return $this->exportDeclaration;
+    }
+
+    public function getEstimatedDeliveryType()
+    {
+        return $this->estimatedDeliveryType;
+    }
+
+    public function setEstimatedDeliveryType(string $type)
+    {
+        $this->estimatedDeliveryType = $type;
     }
 }

@@ -36,6 +36,11 @@ interface ShipmentDetailsInterface
     public function isRegularPickup();
 
     /**
+     * @return bool
+     */
+    public function isEstimatedDeliveryDateRequested();
+
+    /**
      * Returns the content type.
      *
      * @return string
@@ -97,4 +102,9 @@ interface ShipmentDetailsInterface
      * @return string
      */
     public function getPaperlessEncodedStringDocument();
+
+    /**
+     * @return string
+     */
+    public function getEstimatedDeliveryType();
 }

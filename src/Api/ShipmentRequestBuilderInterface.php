@@ -267,4 +267,5 @@ interface ShipmentRequestBuilderInterface
 
     public function setCustomerLogo(string $image, string $format): ShipmentRequestBuilderInterface;
 
+    public function setEstimatedDeliveryDateRequested(bool $requested, ?string $deliveryType): ShipmentRequestBuilderInterface;
 }

@@ -2,6 +2,7 @@
 /**
  * See LICENSE.md for license details.
  */
+
 namespace Dhl\Express\Webservice\Soap\Type\ShipmentRequest;
 
 use Dhl\Express\Webservice\Soap\Type\Common\Billing;
@@ -13,6 +14,7 @@ use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\Account;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\LabelTemplate;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\LabelType;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\PackagesCount;
+use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\RequestEstimatedDeliveryDate;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\ServiceType;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\ShipmentIdentificationNumber;
 use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\ShipmentInfo\UseOwnShipmentIdentificationNumber;
@@ -180,19 +182,29 @@ class ShipmentInfo
     private $SpecialPickupInstructions;
 
     /**
+     * @var RequestEstimatedDeliveryDate
+     */
+    private $RequestEstimatedDeliveryDate;
+
+    /**
+     * @var string
+     */
+    private $EstimatedDeliveryType;
+
+    /**
      * Constructor.
      *
-     * @param string $dropOffType       The drop off type
-     * @param string $serviceType       The service type
-     * @param string $currencyCode      The currency code
+     * @param string $dropOffType The drop off type
+     * @param string $serviceType The service type
+     * @param string $currencyCode The currency code
      * @param string $unitOfMeasurement The unit of measurement
      */
     public function __construct($dropOffType, $serviceType, $currencyCode, $unitOfMeasurement)
     {
         $this->setDropOffType($dropOffType)
-          ->setServiceType($serviceType)
-          ->setCurrency($currencyCode)
-          ->setUnitOfMeasurement($unitOfMeasurement);
+            ->setServiceType($serviceType)
+            ->setCurrency($currencyCode)
+            ->setUnitOfMeasurement($unitOfMeasurement);
     }
 
     /**
@@ -227,6 +239,7 @@ class ShipmentInfo
     {
         return $this->ServiceType;
     }
+
     /**
      * Returns the local service type.
      *
@@ -630,6 +643,29 @@ class ShipmentInfo
     {
         $this->LabelOptions = $labelOptions;
         return $this;
+    }
+
+    public function setEstimatedDeliveryDateRequested(bool $requested, string $estimatedDeliveryType)
+    {
+        $this->RequestEstimatedDeliveryDate = new RequestEstimatedDeliveryDate($requested);
+        $this->EstimatedDeliveryType = $estimatedDeliveryType;
+        return $this;
+    }
+
+    /**
+     * @return RequestEstimatedDeliveryDate
+     */
+    public function getRequestEstimatedDeliveryDate()
+    {
+        return $this->RequestEstimatedDeliveryDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEstimatedDeliveryType()
+    {
+        return $this->EstimatedDeliveryType;
     }
 
 }

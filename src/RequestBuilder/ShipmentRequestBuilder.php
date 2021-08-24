@@ -212,6 +212,16 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
         return $this;
     }
 
+    public function setEstimatedDeliveryDateRequested(bool $requested, ?string $deliveryType): ShipmentRequestBuilderInterface
+    {
+        $this->data['estimatedDeliveryDateRequested'] = $requested;
+        if (!empty($deliveryType)) {
+            $this->data['estimatedDeliveryType'] = $deliveryType;
+        }
+
+        return $this;
+    }
+
     public function setPayerAccountNumber(string $accountNumber): ShipmentRequestBuilderInterface
     {
         $this->data['payerAccountNumber'] = $accountNumber;
@@ -413,8 +423,13 @@ class ShipmentRequestBuilder implements ShipmentRequestBuilderInterface
             $this->data['currencyCode'],
             $this->data['description'],
             $this->data['customsValue'],
-            $this->data['serviceType']
+            $this->data['serviceType'],
+            $this->data['estimatedDeliveryDateRequested'] ?? false
         );
+
+        if ($shipmentDetails->isEstimatedDeliveryDateRequested() && isset($this->data['estimatedDeliveryType'])) {
+            $shipmentDetails->setEstimatedDeliveryType($this->data['estimatedDeliveryType']);
+        }
 
         // Build shipper
         $shipper = new Shipper(

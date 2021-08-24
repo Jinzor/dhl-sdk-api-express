@@ -61,6 +61,10 @@ class ShipmentRequestMapper
             $this->mapUOM($weightUOM, $dimensionsUOM)
         );
 
+        if ($request->getShipmentDetails()->isEstimatedDeliveryDateRequested()) {
+            $shipmentInfo->setEstimatedDeliveryDateRequested(true, $request->getShipmentDetails()->getEstimatedDeliveryType());
+        }
+
         if (!empty($request->getShipmentDetails()->getSpecialShipmentInstructions())) {
             $shipmentInfo->setSpecialPickupInstructions($request->getShipmentDetails()->getSpecialShipmentInstructions());
         }
