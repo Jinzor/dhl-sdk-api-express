@@ -5,9 +5,6 @@
 
 namespace Dhl\Express\Api;
 
-use Dhl\Express\Api\Data\ShipmentRequestInterface;
-use Dhl\Express\Webservice\Soap\Type\ShipmentRequest\InternationalDetail\ExportDeclaration\ExportDeclaration;
-
 /**
  * Shipment Request Builder.
  *
@@ -30,14 +27,23 @@ interface RequestPickupBuilderInterface
      *
      * @param string $accountNumber
      *
-     * @return ShipmentRequestBuilderInterface
+     * @return RequestPickupBuilderInterface
      */
-    public function setBillingAccountNumber(string $accountNumber): ShipmentRequestBuilderInterface;
+    public function setBillingAccountNumber(string $accountNumber): RequestPickupBuilderInterface;
 
+    /**
+     * Sets the Pickup date
+     *
+     * @param \DateTime $pickupDate
+     * @return RequestPickupBuilderInterface
+     */
+    public function setPickupDate(\DateTime $pickupDate): RequestPickupBuilderInterface;
 
-    public function setPickupDate(\DateTime $pickupDate);
-
-    public function setPickupLocationCloseTime();
+    /**
+     * @param string $time
+     * @return RequestPickupBuilderInterface
+     */
+    public function setPickupLocationCloseTime(string $time): RequestPickupBuilderInterface;
 
     /**
      * Sets the shipper.
@@ -51,18 +57,18 @@ interface RequestPickupBuilderInterface
      * @param string $phone
      * @param string|null $email
      *
-     * @return ShipmentRequestBuilderInterface
+     * @return RequestPickupBuilderInterface
      */
     public function setShipper(
         string $countryCode,
         string $postalCode,
         string $city,
-        array  $streetLines,
+        array $streetLines,
         string $name,
         string $company,
         string $phone,
         string $email = null
-    ): ShipmentRequestBuilderInterface;
+    ): RequestPickupBuilderInterface;
 
     /**
      * Sets the recipient.
@@ -76,18 +82,18 @@ interface RequestPickupBuilderInterface
      * @param string $phone
      * @param string|null $email
      *
-     * @return ShipmentRequestBuilderInterface
+     * @return RequestPickupBuilderInterface
      */
     public function setRecipient(
         string $countryCode,
         string $postalCode,
         string $city,
-        array  $streetLines,
+        array $streetLines,
         string $name,
         string $company,
         string $phone,
         string $email = null
-    ): ShipmentRequestBuilderInterface;
+    ): RequestPickupBuilderInterface;
 
     /**
      * Adds a package to the list of packages.
@@ -101,15 +107,15 @@ interface RequestPickupBuilderInterface
      * @param string $dimensionsUOM
      * @param string $customerReferences
      *
-     * @return ShipmentRequestBuilderInterface
+     * @return RequestPickupBuilderInterface
      */
     public function addPackage(
-        int    $sequenceNumber,
-        float  $weight,
+        int $sequenceNumber,
+        float $weight,
         string $weightUOM,
-        float  $length,
-        float  $width,
-        float  $height,
+        float $length,
+        float $width,
+        float $height,
         string $dimensionsUOM,
         string $customerReferences
     ): RequestPickupBuilderInterface;
