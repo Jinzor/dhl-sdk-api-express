@@ -121,6 +121,13 @@ class ShipmentDetails implements ShipmentDetailsInterface
     private $customsValue;
 
     /**
+     * The customs value currency.
+     *
+     * @var string
+     */
+    private $customsValueCurrencyCode;
+
+    /**
      * The service type.
      *
      * @var string
@@ -159,7 +166,8 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $currencyCode,
         $description,
         $customsValue,
-        $serviceType
+        $serviceType,
+        $customsValueCurrencyCode
     ) {
         $this->unscheduledPickup = $unscheduledPickup;
         $this->termsOfTrade = $termsOfTrade;
@@ -170,6 +178,7 @@ class ShipmentDetails implements ShipmentDetailsInterface
         $this->description = $description;
         $this->customsValue = $customsValue;
         $this->serviceType = $serviceType;
+        $this->customsValueCurrencyCode = $customsValueCurrencyCode;
     }
 
     public function isUnscheduledPickup()
@@ -215,6 +224,11 @@ class ShipmentDetails implements ShipmentDetailsInterface
     public function getCustomsValue()
     {
         return (float) $this->customsValue;
+    }
+
+    public function getCustomsValueCurrencyCode()
+    {
+        return (string) $this->customsValueCurrencyCode;
     }
 
     public function getServiceType()

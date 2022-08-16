@@ -123,6 +123,7 @@ class ShipmentRequestMapper
 
         $commodities->setNumberOfPieces($request->getShipmentDetails()->getNumberOfPieces());
         $commodities->setCustomsValue($request->getShipmentDetails()->getCustomsValue());
+        $commodities->setCustomsValueCurrencyCode($request->getShipmentDetails()->getCustomsValueCurrencyCode());
 
         // Create shipment
         $requestedShipment = new RequestedShipment(
